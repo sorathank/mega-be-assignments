@@ -25,7 +25,7 @@ def main():
     if args.detail != None: 
         get_detail(args)
     else:
-        "NOT IMPLEMENTED"
+        print("NOT IMPLEMENTED")
 
 if __name__ == "__main__":
     main()
