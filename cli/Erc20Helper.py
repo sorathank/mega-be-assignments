@@ -1,17 +1,8 @@
 import argparse
 
-def get_detail(args):
-    addr = args.detail[0]
-    mock_detail = {
-        "name": "BOOM",
-        "symbol": "BM",
-        "decimals": 18
-    }
-    print(mock_detail)
-    return
-
 def main():
     arg_parser = argparse.ArgumentParser(description="TEST ARG_PARSER")
+
     arg_parser.add_argument(
         "--detail", 
         type = str, 
