@@ -1,8 +1,9 @@
 def solve(wordList, target):
-    pass
+    for separator_idx in range(1, len(target)):
+        print(target[:separator_idx], target[separator_idx:])
 
 wordList = []
-target = ""
+target = "a"
 
 if __name__ == "__main__":
     solve(wordList, target)
