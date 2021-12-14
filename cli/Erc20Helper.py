@@ -1,8 +1,9 @@
-import argparse
+from Parser import CustomParser
 from Actions import *
+import sys
 
 def main():
-    arg_parser = argparse.ArgumentParser(description="TEST ARG_PARSER")
+    arg_parser = CustomParser(description="TEST ARG_PARSER")
 
     arg_parser.add_argument(
         "--detail", 
@@ -45,11 +46,21 @@ def main():
         help = "Generate Top N Holders (1 <= N <= 100) into a text file contains Holder Addresses and Balances"
         )
 
+    if len(sys.argv) == 1:
+        arg_parser.print_help()
+        sys.exit(2)
+
     args = arg_parser.parse_args()
     if args.detail != None: 
-        get_detail(args)
-    else:
-        print("NOT IMPLEMENTED")
+        get_detail(args.detail[0])
+    elif args.balanceOf != None:
+        get_balanceOf(args.balanceOf[0], args.balanceOf[1])
+    elif args.watch_tx != None:
+        subscribe_tx(args.watch_tx[0])
+    elif args.latest_tx != None:
+        get_latest_tx(args.latest_tx[0], args.latest_tx[1])
+    elif args.holders != None:
+        get_top_holders(args.holders[0], args.holders[1])
 
 if __name__ == "__main__":
     main()
