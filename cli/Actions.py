@@ -1,4 +1,12 @@
-import web3
+from web3 import Web3
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+web3 = Web3(Web3.HTTPProvider(os.getenv("RPC_URL")))
+
+# print(web3.isConnected())
 
 def get_detail(contract_addr):
     mock_detail = {
