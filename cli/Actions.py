@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-web3 = Web3(Web3.HTTPProvider(os.getenv("RPC_URL")))
+web3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
 
 # print(web3.isConnected())
 
