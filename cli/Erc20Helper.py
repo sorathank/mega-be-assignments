@@ -3,37 +3,41 @@ from Actions import *
 import sys
 
 def main():
-    arg_parser = CustomParser(description="TEST ARG_PARSER")
+    arg_parser = CustomParser(description="ERC20 Helper")
 
     arg_parser.add_argument(
+        "-d",
         "--detail", 
         type = str, 
         nargs = 1,
-        metavar = "<contract_address>",
+        metavar = "<CONTRACT_ADDRESS>",
         default = None,
         help = "Get Token's name, symbol and decimals from Contract Address"
         )
     arg_parser.add_argument(
+        "-b",
         "--balanceOf", 
         type = str, 
         nargs = 2,
-        metavar = ("<contract_address>", "<target_address>"),
+        metavar = ("<CONTRACT_ADDRESS>", "<TARGET_ADDRESS>"),
         default = None,
-        help = "Get amount of ERC20 Token <contract_address> belong to <target_address>"
+        help = "Get Amount of ERC20 Token <CONTRACT_ADDRESS> belong to <target_address>"
         )
     arg_parser.add_argument(
+        "-w",
         "--watch_tx", 
         type = str, 
         nargs = 1,
-        metavar = "<contract_address>",
+        metavar = "<CONTRACT_ADDRESS>",
         default = None,
-        help = "Subscribe Tx from <contract_address> and keep logging URL to etherscan.io"
+        help = "Subscribe Tx from <CONTRACT_ADDRESS> and keep logging URL to etherscan.io"
         )
     arg_parser.add_argument(
+        "-l",
         "--latest_tx", 
         type = str, 
         nargs = 2,
-        metavar = ("<N>", "<contract_address>"),
+        metavar = ("<N>", "<CONTRACT_ADDRESS>"),
         default = None,
         help = "Generate Latest N (1 <= N <= 100) transaction into a text file contains TxHash, Sender Address, Decoded Call Data"
         )
@@ -41,12 +45,13 @@ def main():
         "--holders", 
         type = str, 
         nargs = 2,
-        metavar = ("<N>", "<contract_address>"),
+        metavar = ("<N>", "<CONTRACT_ADDRESS>"),
         default = None,
         help = "Generate Top N Holders (1 <= N <= 100) into a text file contains Holder Addresses and Balances"
         )
 
     if len(sys.argv) == 1:
+        sys.stderr.write('error: no argument given\n')
         arg_parser.print_help()
         sys.exit(2)
 
