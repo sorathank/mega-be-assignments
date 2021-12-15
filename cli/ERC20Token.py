@@ -55,16 +55,23 @@ class ERC20Contract:
 
     def subscribe_tx(self):
         event_filter = w3.eth.filter({'fromBlock':'latest', 'address':self.address})
+
         while True:
             tx_set = set()
             for event in event_filter.get_new_entries():
                 tx_hash = event["transactionHash"].hex()
+
+                #PREVENT LOGGIN DUPLICATED TRANSACTIONS
                 if tx_hash not in tx_set:
                     print(f'https://etherscan.io/tx/{tx_hash}')
+
                 tx_set.add(event["transactionHash"].hex())
             time.sleep(EVENT_POLLING_INTERVAL)
     
     def get_latest_tx(self, n):
+        pass
+
+    def get_top_holders(self, n):
         pass
         
 
