@@ -13,7 +13,8 @@ def get_balanceOf(contract_addr, target_addr):
     return
 
 def subscribe_tx(contract_addr):
-    print(f"subscribe {contract_addr}")
+    contract = ERC20Contract(contract_addr)
+    contract.subscribe_tx()
     return
 
 def get_latest_tx(n, contract_addr):
