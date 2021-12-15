@@ -1,12 +1,16 @@
 from web3 import Web3
 from dotenv import load_dotenv
 import os
+import json
 
 load_dotenv()
 
 web3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
+with open('abi.json') as abi:
+    ERC20_ABI = json.load(abi)
 
 # print(web3.isConnected())
+# print(ERC20_ABI)
 
 def get_detail(contract_addr):
     mock_detail = {
