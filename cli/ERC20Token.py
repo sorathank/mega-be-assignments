@@ -77,8 +77,27 @@ class ERC20Contract:
                 sys.exit(0)
     
     def get_latest_tx(self, n):
-
-        pass
+        params = {
+            "apiKey": ETHPLORER_API_KEY,
+            "limit": n
+        }
+        url = f'https://api.ethplorer.io/getTokenHistory/{self.address}'
+        resp = requests.get(url, params=params).json()
+        txn_details = dict()
+        for idx, txn in enumerate(resp["operations"]):
+            eth_tx = w3.eth.getTransaction(txn["transactionHash"])
+            sender = eth_tx['from']
+            tx_hash = eth_tx['hash'].hex()
+            try:
+                calldata = self.contract.decode_function_input(eth_tx.input)
+            except:
+                calldata = f"Could not decode calldata. For more detail please check at https://etherscan.io/tx/{tx_hash}"
+            txn_details[idx] = {
+                'sender': sender,
+                'tx_hash': tx_hash,
+                'calldata': calldata
+            }
+        return txn_details
 
     def get_top_holders(self, n):
         params = {
