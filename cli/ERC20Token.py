@@ -2,10 +2,11 @@ from web3 import Web3, contract
 from dotenv import load_dotenv
 import os
 import json
+import sys
 
 load_dotenv()
 
-web3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
+w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
 with open('abi.json') as abi:
     ERC20_ABI = json.load(abi)
 
@@ -13,17 +14,18 @@ with open('abi.json') as abi:
 # This class contains only Read Function due to cost for Write Functin Cost Checking
 
 class ERC20Contract:
-    name = None
-    symbol = None
-    decimals = None
-    contract = None
-
     def __init__(self, addr):
-        self.contract = web3.eth.contract(address=addr, abi=ERC20_ABI)
+        if not Web3.isAddress(addr):
+            sys.stderr.write('Invalid Contract Address\n')
+            sys.exit(2)
+
         try:
+            self.contract = w3.eth.contract(address=addr, abi=ERC20_ABI)
             self.name = self.contract.functions.name().call()
             self.symbol = self.contract.functions.symbol().call()
             self.decimals = self.contract.functions.decimals().call()
+            self.totalSupply = self.contract.functions.totalSupply().call()
         except:
-            pass
+            sys.stderr.write('Invalid Contract Type\n')
+            sys.exit(2)
 
