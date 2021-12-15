@@ -7,7 +7,7 @@ import time
 
 load_dotenv()
 
-EVENT_POLLING_INTERVAL=5 #SECONDS
+POLLING_INTERVAL_SECONDS = os.getenv("POLLING_INTERVAL_SECONDS", default=5)
 w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
 with open('abi.json') as abi:
     ERC20_ABI = json.load(abi)
