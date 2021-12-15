@@ -31,7 +31,6 @@ def get_latest_tx(n, contract_addr):
         sys.exit(2)
     
     contract = ERC20Contract(contract_addr)
-    # print(f"get {n} latest tx of {contract_addr}")
     return
 
 def get_top_holders(n, contract_addr):
@@ -52,9 +51,7 @@ def get_top_holders(n, contract_addr):
         for idx, holder in enumerate(resp['holders']):
             addr = holder['address']
             balance = holder['balance']
-            # print(type(balance))
             decimal_balance = contract.uint2decimal(balance)
 
             file.write(f'{idx}. {addr}: {decimal_balance}\n')
-        # pass
     return
