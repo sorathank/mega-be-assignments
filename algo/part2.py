@@ -1,3 +1,6 @@
+wordList = ["ab", "bc", "cd"]
+target = "abab"
+
 def solve(wordList, target):
 
     duplicated_set = set()
@@ -21,11 +24,6 @@ def solve(wordList, target):
                 return f'("{first_subword}", "{second_subword}")'
         
     return None
-
-wordList = ["ab", "bc", "cd"]
-# target = "abcd"
-# target = "cdab"
-target = "abab"
 
 if __name__ == "__main__":
     print(solve(wordList, target))
