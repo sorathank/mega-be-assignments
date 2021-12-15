@@ -1,4 +1,4 @@
-from web3 import Web3, contract
+from web3 import Web3
 from dotenv import load_dotenv
 import os
 import json
@@ -8,7 +8,7 @@ import requests
 
 load_dotenv()
 
-POLLING_INTERVAL_SECONDS = os.getenv("POLLING_INTERVAL_SECONDS", default=5)
+POLLING_INTERVAL_SECONDS = int(os.getenv("POLLING_INTERVAL_SECONDS", default=5))
 ETHPLORER_API_KEY = os.getenv("ETHPLORER_API_KEY", default="freekey")
 
 w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
