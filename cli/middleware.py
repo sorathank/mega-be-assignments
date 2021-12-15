@@ -19,7 +19,7 @@ def subscribe_tx(contract_addr):
     contract.subscribe_tx()
     return
 
-def get_latest_tx(n, contract_addr):
+def validate_n(n):
     try:
         n = int(n)
     except:
@@ -29,20 +29,16 @@ def get_latest_tx(n, contract_addr):
     if n <= 0 or n > 100:
         sys.stderr.write('Invalid Number\n')
         sys.exit(2)
-    
+    return n
+
+def get_latest_tx(n, contract_addr):
+    n = validate_n(n)
     contract = ERC20Contract(contract_addr)
+    
     return
 
 def get_top_holders(n, contract_addr):
-    try:
-        n = int(n)
-    except:
-        sys.stderr.write('Invalid Number\n')
-        sys.exit(2)
-        
-    if n <= 0 or n > 100:
-        sys.stderr.write('Invalid Number\n')
-        sys.exit(2)
+    n = validate_n(n)
 
     contract = ERC20Contract(contract_addr)
     resp = contract.get_top_holders(n)

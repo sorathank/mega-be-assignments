@@ -56,7 +56,10 @@ class ERC20Contract:
         return f'Balance of {self.name}: {self.uint2decimal(balance)}'
 
     def subscribe_tx(self):
-        event_filter = w3.eth.filter({'fromBlock':'latest', 'address':self.address})
+        event_filter = w3.eth.filter({
+            'fromBlock':'latest', 
+            'address':self.address
+        })
 
         while True:
             tx_set = set()
@@ -68,16 +71,16 @@ class ERC20Contract:
                     print(f'https://etherscan.io/tx/{tx_hash}')
 
                 tx_set.add(event["transactionHash"].hex())
-            time.sleep(POLLING_INTERVAL_SECONDS)
+            try:
+                time.sleep(POLLING_INTERVAL_SECONDS)
+            except KeyboardInterrupt:
+                sys.exit(0)
     
     def get_latest_tx(self, n):
 
         pass
 
     def get_top_holders(self, n):
-        if n <= 0 or n > 100:
-            sys.stderr.write('Invalid Number\n')
-            sys.exit(2)
         params = {
             "apiKey": ETHPLORER_API_KEY,
             "limit": n
