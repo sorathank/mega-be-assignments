@@ -1,24 +1,11 @@
-from web3 import Web3
-from dotenv import load_dotenv
-import os
-import json
+from ERC20Token import ERC20Contract
 
-load_dotenv()
-
-web3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
-with open('abi.json') as abi:
-    ERC20_ABI = json.load(abi)
-
-# print(web3.isConnected())
-# print(ERC20_ABI)
 
 def get_detail(contract_addr):
-    mock_detail = {
-        "name": "BOOM",
-        "symbol": "BM",
-        "decimals": 18
-    }
-    print(mock_detail)
+    contract = ERC20Contract(contract_addr)
+    print(contract.name)
+    print(contract.symbol)
+    print(contract.decimals)
     return
 
 def get_balanceOf(contract_addr, target_addr):
