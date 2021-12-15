@@ -4,11 +4,15 @@ import os
 import json
 import sys
 import time
+import requests
 
 load_dotenv()
 
 POLLING_INTERVAL_SECONDS = os.getenv("POLLING_INTERVAL_SECONDS", default=5)
+ETHPLORER_API_KEY = os.getenv("ETHPLORER_API_KEY", default="freekey")
+
 w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
+
 with open('abi.json') as abi:
     ERC20_ABI = json.load(abi)
 
@@ -17,10 +21,12 @@ with open('abi.json') as abi:
 
 class ERC20Contract:
     def __init__(self, addr):
-        if not Web3.isAddress(addr):
+        self.address = Web3.toChecksumAddress(addr)
+        #0xb8c77482e45F1F44dE1745F52C74426C631bDD52
+        #0xB8c77482e45F1F44dE1745F52C74426C631bDD52
+        if not Web3.isAddress(self.address):
             sys.stderr.write('Invalid Contract Address\n')
             sys.exit(2)
-        self.address = Web3.toChecksumAddress(addr)
 
         try:
             self.contract = w3.eth.contract(address=self.address, abi=ERC20_ABI)
@@ -35,16 +41,12 @@ class ERC20Contract:
     def uint2decimal(self, value):
         if value == 0: 
             decimal = 0
-        
-        ### EX. value = 100, self.decimals = 4 => decimal = "0.0100"  
-        elif len(str(value)) <= self.decimals:
-            decimal = f'0.{"0"*(self.decimals - len(str(value)))}{value}'
-
-        ### EX. value = 1000, self.decimals = 2 => decimal = "10.00" 
         else:
-            decimal = str(value)[:len(str(value)) - self.decimals] + '.' + str(value)[len(str(value)) - self.decimals:]
+            decimal = value
+            for i in range(self.decimals):
+                decimal /= 10.0
 
-        return float(decimal)
+        return decimal
 
     def balanceOf(self, addr):
         if not Web3.isAddress(addr):
@@ -66,12 +68,22 @@ class ERC20Contract:
                     print(f'https://etherscan.io/tx/{tx_hash}')
 
                 tx_set.add(event["transactionHash"].hex())
-            time.sleep(EVENT_POLLING_INTERVAL)
+            time.sleep(POLLING_INTERVAL_SECONDS)
     
     def get_latest_tx(self, n):
+
         pass
 
     def get_top_holders(self, n):
-        pass
+        if n <= 0 or n > 100:
+            sys.stderr.write('Invalid Number\n')
+            sys.exit(2)
+        params = {
+            "apiKey": ETHPLORER_API_KEY,
+            "limit": n
+        }
+        url = f'https://api.ethplorer.io/getTopTokenHolders/{self.address}'
+        resp = requests.get(url, params=params).json()
+        return resp
         
 
