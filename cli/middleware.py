@@ -23,11 +23,11 @@ def validate_n(n):
     try:
         n = int(n)
     except:
-        sys.stderr.write('Invalid Number\n')
+        sys.stderr.write('[ERROR] Invalid Number\n')
         sys.exit(2)
 
     if n <= 0 or n > 100:
-        sys.stderr.write('Invalid Number\n')
+        sys.stderr.write('[ERROR] Invalid Number\n')
         sys.exit(2)
     return n
 

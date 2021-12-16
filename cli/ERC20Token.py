@@ -60,7 +60,7 @@ class ERC20Contract:
 
     def balanceOf(self, addr):
         if not Web3.isAddress(addr):
-            sys.stderr.write('Invalid Tartget Address\n')
+            sys.stderr.write('[ERROR] Invalid Tartget Address\n')
             sys.exit(2)
         balance = self.contract.functions.balanceOf(addr).call()
         return f'Balance of {self.name}: {self.uint2decimal(balance)}'
@@ -139,17 +139,18 @@ class ERC20Contract:
         
 
 def env_check():
+    ## .env FILE CHECK
     if not os.path.isfile('./.env'):
         sys.stderr.write('[ERROR] .env file does not exists\n')
         sys.exit(2)
     ## RPC CHECK
     if not w3.isConnected():
-        sys.stderr.write('Please check your RPC URL\n')
+        sys.stderr.write('[ERROR] Please check your RPC URL\n')
         sys.exit(2)
         
     ## POLLING INTERVAL CHECK
     if POLLING_INTERVAL_SECONDS < 1 or POLLING_INTERVAL_SECONDS > 1000:
-        sys.stderr.write('Invalid POLLING INTERVAL. Please provide integer between 1 and 1000\n')
+        sys.stderr.write('[ERROR] Invalid POLLING INTERVAL. Please provide integer between 1 and 1000\n')
         sys.exit(2) 
     
     ## ETHPLORER API KEY CHECK
@@ -158,12 +159,12 @@ def env_check():
     }
     resp = requests.get(f'{ETHPLORER_URL}/getLastBlock', params=params)
     if "error" in resp.json():
-        sys.stderr.write('Invalid Ethplorer API Key\n')
+        sys.stderr.write('[ERROR] Invalid Ethplorer API Key\n')
         sys.exit(2)
     
     ## ETHERSCAN API KEY CHECK
     if ETHERSCAN_API_KEY == "":
-        sys.stderr.write('Invalid Etherscan API Key\n')
+        sys.stderr.write('[ERROR] Invalid Etherscan API Key\n')
         sys.exit(2)
     params = {
         'module': 'account',
@@ -173,7 +174,7 @@ def env_check():
         'tag': 'latest'
     }
     if requests.get(ETHERSCAN_URL, params=params).json()["status"] == "0":
-        sys.stderr.write('Invalid Etherscan API Key\n')
+        sys.stderr.write('[ERROR] Invalid Etherscan API Key\n')
         sys.exit(2)
 
     return
