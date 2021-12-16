@@ -7,21 +7,25 @@ import time
 import requests
 
 load_dotenv()
+RPC_URL = os.getenv("HTTPS_RPC_URL")
+w3 = Web3(Web3.HTTPProvider(RPC_URL))
+try:
+    POLLING_INTERVAL_SECONDS = int(os.getenv("POLLING_INTERVAL_SECONDS", default=5))
+except:
+    sys.stderr.write('Invalid POLLING INTERVAL. Please provide integer between 1 and 1000.\n')
+    sys.exit(2)  
+  
 
-POLLING_INTERVAL_SECONDS = int(os.getenv("POLLING_INTERVAL_SECONDS", default=5))
 ETHPLORER_API_KEY = os.getenv("ETHPLORER_API_KEY", default="freekey")
 ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
 ETHERSCAN_URL = "https://api.etherscan.io/api"
 ETHPLORER_URL = "https://api.ethplorer.io"
-
-w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
 
 with open('abi.json') as abi:
     ERC20_ABI = json.load(abi)
 
 # This Class is not fully ERC20 Token defined
 # This class contains only Read Function due to cost for Write Functin Cost Checking
-
 def clean_address(addr):
     try: 
         addr = Web3.toChecksumAddress(addr)
@@ -134,3 +138,39 @@ class ERC20Contract:
         return resp
         
 
+def env_check():
+    ## RPC CHECK
+    if not w3.isConnected():
+        sys.stderr.write('Please check your RPC URL\n')
+        sys.exit(2)
+        
+    ## POLLING INTERVAL CHECK
+    if POLLING_INTERVAL_SECONDS < 1 or POLLING_INTERVAL_SECONDS > 1000:
+        sys.stderr.write('Invalid POLLING INTERVAL. Please provide integer between 1 and 1000\n')
+        sys.exit(2) 
+    
+    ## ETHPLORER API KEY CHECK
+    params = {
+        "apiKey": ETHPLORER_API_KEY
+    }
+    resp = requests.get(f'{ETHPLORER_URL}/getLastBlock', params=params)
+    if "error" in resp.json():
+        sys.stderr.write('Invalid Ethplorer API Key\n')
+        sys.exit(2)
+    
+    ## ETHERSCAN API KEY CHECK
+    if ETHERSCAN_API_KEY == "":
+        sys.stderr.write('Invalid Etherscan API Key\n')
+        sys.exit(2)
+    params = {
+        'module': 'account',
+        'action': 'balance',
+        'address': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        'apikey': ETHERSCAN_API_KEY,
+        'tag': 'latest'
+    }
+    if requests.get(ETHERSCAN_URL, params=params).json()["status"] == "0":
+        sys.stderr.write('Invalid Etherscan API Key\n')
+        sys.exit(2)
+
+    return

@@ -1,4 +1,5 @@
 from Parser import CustomParser
+from ERC20Token import env_check
 from middleware import *
 import sys
 
@@ -67,5 +68,7 @@ def main():
     elif args.holders != None:
         get_top_holders(args.holders[0], args.holders[1])
 
+
 if __name__ == "__main__":
+    env_check()
     main()
