@@ -18,7 +18,7 @@ Then you can get your ```HTTPS RPC URL``` inside your project in **Endpoint** Se
 
 Register an account on [Ethplorer](https://ethplorer.io/wallet/#) and create your API Key at [Ethplorer API Panel](https://ethplorer.io/wallet/#screen=api). 
 
-Register an account on [Etherscan APIs](https://etherscan.io/apis) and create your API Key.
+Register an account on [Etherscan APIs](https://etherscan.io/apis), Login and create your API Key at [My API Key](https://etherscan.io/myapikey).
 
 .
 
