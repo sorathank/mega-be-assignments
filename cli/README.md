@@ -12,9 +12,9 @@ Example:
 
 ![](https://i.ibb.co/KDM0H0T/Screenshot-2021-12-16-215003.png)
 
-Register an account on [Infura](https://infura.io/), Login to your account and create your project.
+Register an account on [Infura](https://infura.io/), Login to your account and create new **Ethereum** project.
 
-Then you can get your HTTPS RPC URL inside your project.
+Then you can get your ```HTTPS RPC URL``` inside your project.
 
 Register an account on [Ethplorer](https://ethplorer.io/wallet/#) and create your API Key at [Ethplorer API Panel](https://ethplorer.io/wallet/#screen=api). 
 
