@@ -42,6 +42,7 @@ def get_latest_tx(n, contract_addr):
             hash = txn['tx_hash']
             calldata = txn['calldata']
             file.write(f'{idx + 1}.\nSender: {sender}\nTxn Hash: {hash}\nCall Data: {calldata}\n\n')
+    print(f'Result saved to file: {filename}')
     return
 
 def get_top_holders(n, contract_addr):
@@ -57,4 +58,5 @@ def get_top_holders(n, contract_addr):
             decimal_balance = contract.uint2decimal(balance)
 
             file.write(f'{idx + 1}. {addr}: {decimal_balance}\n')
+    print(f'Result saved to file: {filename}')
     return
