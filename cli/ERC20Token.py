@@ -21,11 +21,16 @@ with open('abi.json') as abi:
 # This Class is not fully ERC20 Token defined
 # This class contains only Read Function due to cost for Write Functin Cost Checking
 
+def clean_address(addr):
+    try: 
+        addr = Web3.toChecksumAddress(addr)
+    except:
+        pass
+    return addr
+
 class ERC20Contract:
     def __init__(self, addr):
-        self.address = Web3.toChecksumAddress(addr)
-        #0xb8c77482e45F1F44dE1745F52C74426C631bDD52
-        #0xB8c77482e45F1F44dE1745F52C74426C631bDD52
+        self.address = clean_address(addr)
         if not Web3.isAddress(self.address):
             sys.stderr.write('Invalid Contract Address\n')
             sys.exit(2)
@@ -44,9 +49,7 @@ class ERC20Contract:
         if value == 0: 
             decimal = 0
         else:
-            decimal = value
-            for i in range(self.decimals):
-                decimal /= 10.0
+            decimal = value / 10.0**self.decimals
 
         return decimal
 
@@ -104,30 +107,28 @@ class ERC20Contract:
             })
         return txn_details
     
-    def fetch_transfer_event(self, page=1, startblock=0):
+    def fetch_transfer_event(self, startblock=0):
         params = {
             "module": "account",
             "action": "tokentx",
             "contractaddress": self.address,
-            "page": page,
+            "page": 1,
             "offset": 10000,
             "startblock": startblock,
             "sort": "asc",
             "apikey": ETHERSCAN_API_KEY
         }
+        print(f"FETCHING -- BlockNumber {startblock}")
         resp = requests.get(ETHERSCAN_URL, params=params)
         return resp.json()['result']
 
     def get_top_holders(self, n):
-        # params = {
-        #     "apiKey": ETHPLORER_API_KEY,
-        #     "limit": n
-        # }
-        # url = f'https://api.ethplorer.io/getTopTokenHolders/{self.address}'
-        # resp = requests.get(url, params=params).json()
-        # return resp
-
-        print(self.fetch_transfer_event())
-        pass
+        params = {
+            "apiKey": ETHPLORER_API_KEY,
+            "limit": n
+        }
+        url = f'https://api.ethplorer.io/getTopTokenHolders/{self.address}'
+        resp = requests.get(url, params=params).json()
+        return resp
         
 

@@ -56,5 +56,5 @@ def get_top_holders(n, contract_addr):
             balance = holder['balance']
             decimal_balance = contract.uint2decimal(balance)
 
-            file.write(f'{idx}. {addr}: {decimal_balance}\n')
+            file.write(f'{idx + 1}. {addr}: {decimal_balance}\n')
     return
