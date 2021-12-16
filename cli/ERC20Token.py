@@ -139,6 +139,9 @@ class ERC20Contract:
         
 
 def env_check():
+    if not os.path.isfile('./.env'):
+        sys.stderr.write('[ERROR] .env file does not exists\n')
+        sys.exit(2)
     ## RPC CHECK
     if not w3.isConnected():
         sys.stderr.write('Please check your RPC URL\n')
