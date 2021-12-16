@@ -31,7 +31,7 @@ def clean_address(addr):
         addr = Web3.toChecksumAddress(addr)
     except:
         pass
-    
+
     if not Web3.isAddress(addr):
             sys.stderr.write('Invalid Contract Address\n')
             sys.exit(2)
@@ -71,20 +71,21 @@ class ERC20Contract:
             'address':self.address
         })
 
-        while True:
-            tx_set = set()
-            for event in event_filter.get_new_entries():
-                tx_hash = event["transactionHash"].hex()
+        try:
+            while True:
+                tx_set = set()
+                for event in event_filter.get_new_entries():
+                    tx_hash = event["transactionHash"].hex()
 
-                #PREVENT LOGGIN DUPLICATED TRANSACTIONS
-                if tx_hash not in tx_set:
-                    print(f'https://etherscan.io/tx/{tx_hash}')
+                    #PREVENT LOGGIN DUPLICATED TRANSACTIONS
+                    if tx_hash not in tx_set:
+                        print(f'https://etherscan.io/tx/{tx_hash}')
 
-                tx_set.add(event["transactionHash"].hex())
-            try:
+                    tx_set.add(event["transactionHash"].hex())
+                
                 time.sleep(POLLING_INTERVAL_SECONDS)
-            except KeyboardInterrupt:
-                sys.exit(0)
+        except KeyboardInterrupt:
+            sys.exit(0)
     
     def get_latest_tx(self, n):
         params = {
