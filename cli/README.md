@@ -1,4 +1,4 @@
-## How to run
+## Setup Environment Variables
 
 First, please cd to cli directory and run the command below.
 
@@ -6,19 +6,29 @@ First, please cd to cli directory and run the command below.
 ```
 pip install -r ./requirements.txt
 ```
-Next step, copy .env.template file and paste it on the same folder. Then rename it to .env.
+Next step, copy ```.env.template.txt``` file and paste it on the same folder. Then rename the new file to ```.env```.
 
 Example:
 
-![](https://i.ibb.co/nwXTzTr/Screenshot-2021-12-16-215003.png)
+![](https://i.ibb.co/KDM0H0T/Screenshot-2021-12-16-215003.png)
 
 Register an account on [Ethplorer](https://ethplorer.io/wallet/#) and create your API Key at [Ethplorer API Panel](https://ethplorer.io/wallet/#screen=api). 
 
 Register an account on [Etherscan APIs](https://etherscan.io/apis) and create your API Key.
 
-Then enter your HTTPS RPC URL, Polling interval for watch_tx command (in seconds), Ethplorer API Key and Etherscan API Key in your .env file.
+.
 
-To run the program, run ```python ./Erc20Helper.py``` or ```python3 ./Erc20Helper.py``` if your python command is using python2 with the following argument.
+Then enter your HTTPS RPC URL, Polling interval for watch_tx command (in seconds), Ethplorer API Key and Etherscan API Key in your ```.env``` file.
+
+## How to run
+
+To run the program, cd to cli directory and run the command below.
+
+```python ./Erc20Helper.py``` 
+
+if your python command is using python2 with the following argument, use the command below. 
+
+```python3 ./Erc20Helper.py``` 
 
 Optional Arguments:
 ```
