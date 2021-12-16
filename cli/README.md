@@ -30,7 +30,7 @@ To run the program, cd to cli directory and run the command below.
 
 ```python ./Erc20Helper.py``` 
 
-if your python command is using python2 with the following argument, use the command below. 
+if your ```python``` command is using python2 with the following argument, use the command below. 
 
 ```python3 ./Erc20Helper.py``` 
 
