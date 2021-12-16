@@ -21,8 +21,8 @@ If you have any trouble running the code, I had already added it on [colab](http
 
 Given target length is m and wordList contains n words.
 
-We know that there are m - 1 ways to separate target to be 2 sub-strings.
-![](https://i.ibb.co/1zxp5H2/S-10911748.jpg)
+We know that there are m ways to separate target to be 2 sub-strings.
+![](https://i.ibb.co/THjmJzv/S-10911750.jpg)
 
 From my code, I choose to iterate on every possible ways and check if the way is valid.
 I initialized two sets used for looking up because it is more efficient than looking up in Python List.
