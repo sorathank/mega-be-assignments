@@ -14,7 +14,7 @@ Example:
 
 Register an account on [Infura](https://infura.io/), Login to your account and create new **Ethereum** project.
 
-Then you can get your ```HTTPS RPC URL``` inside your project.
+Then you can get your ```HTTPS RPC URL``` inside your project in **Endpoint** Section.
 
 Register an account on [Ethplorer](https://ethplorer.io/wallet/#) and create your API Key at [Ethplorer API Panel](https://ethplorer.io/wallet/#screen=api). 
 
