@@ -21,7 +21,7 @@ ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
 ETHERSCAN_URL = "https://api.etherscan.io/api"
 ETHPLORER_URL = "https://api.ethplorer.io"
 
-with open('abi.json') as abi:
+with open('./abi.json') as abi:
     ERC20_ABI = json.load(abi)
 
 # This Class is not fully ERC20 Token defined
@@ -31,14 +31,16 @@ def clean_address(addr):
         addr = Web3.toChecksumAddress(addr)
     except:
         pass
+    
+    if not Web3.isAddress(addr):
+            sys.stderr.write('Invalid Contract Address\n')
+            sys.exit(2)
     return addr
 
 class ERC20Contract:
     def __init__(self, addr):
         self.address = clean_address(addr)
-        if not Web3.isAddress(self.address):
-            sys.stderr.write('Invalid Contract Address\n')
-            sys.exit(2)
+        
 
         try:
             self.contract = w3.eth.contract(address=self.address, abi=ERC20_ABI)
@@ -59,9 +61,7 @@ class ERC20Contract:
         return decimal
 
     def balanceOf(self, addr):
-        if not Web3.isAddress(addr):
-            sys.stderr.write('[ERROR] Invalid Tartget Address\n')
-            sys.exit(2)
+        addr = clean_address(addr)
         balance = self.contract.functions.balanceOf(addr).call()
         return f'Balance of {self.name}: {self.uint2decimal(balance)}'
 
