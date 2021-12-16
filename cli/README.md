@@ -28,11 +28,15 @@ Then enter your HTTPS RPC URL, Polling interval for watch_tx command (in seconds
 
 To run the program, cd to cli directory and run the command below with the following argument.
 
-```python ./Erc20Helper.py``` 
+```
+python ./Erc20Helper.py
+``` 
 
 if your ```python``` command is using python2, use the command below. 
 
-```python3 ./Erc20Helper.py``` 
+```
+python3 ./Erc20Helper.py
+``` 
 
 Optional Arguments:
 ```
