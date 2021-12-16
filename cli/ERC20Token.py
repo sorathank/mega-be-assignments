@@ -109,7 +109,7 @@ class ERC20Contract:
             "module": "account",
             "action": "tokentx",
             "contractaddress": self.address,
-            "page": 1,
+            "page": page,
             "offset": 10000,
             "startblock": startblock,
             "sort": "asc",
