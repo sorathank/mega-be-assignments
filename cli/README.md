@@ -6,6 +6,10 @@ First, please cd to cli directory and run the command below.
 ```
 pip install -r ./requirements.txt
 ```
+if your laptop is using pip for python2, please use this instead.
+```
+pip3 install -r ./requirements.txt
+```
 Next step, copy ```.env.template.txt``` file and paste it on the same folder. Then rename the new file to ```.env```.
 
 Example:
