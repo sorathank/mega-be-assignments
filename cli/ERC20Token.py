@@ -10,6 +10,8 @@ load_dotenv()
 
 POLLING_INTERVAL_SECONDS = int(os.getenv("POLLING_INTERVAL_SECONDS", default=5))
 ETHPLORER_API_KEY = os.getenv("ETHPLORER_API_KEY", default="freekey")
+ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
+ETHERSCAN_URL = "https://api.etherscan.io/api"
 
 w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
 
@@ -77,26 +79,50 @@ class ERC20Contract:
                 sys.exit(0)
     
     def get_latest_tx(self, n):
+        # params = {
+        #     "apiKey": ETHPLORER_API_KEY,
+        #     "limit": n
+        # }
+        # url = f'https://api.ethplorer.io/getTokenHistory/{self.address}'
+        # resp = requests.get(url, params=params).json()
+        # txn_details = dict()
+        # for idx, txn in enumerate(resp["operations"]):
+        #     eth_tx = w3.eth.getTransaction(txn["transactionHash"])
+        #     sender = eth_tx['from']
+        #     tx_hash = eth_tx['hash'].hex()
+        #     try:
+        #         calldata = self.contract.decode_function_input(eth_tx.input)
+        #     except:
+        #         calldata = f"Could not decode calldata. For more detail please check at https://etherscan.io/tx/{tx_hash}"
+        #     txn_details[idx] = {
+        #         'sender': sender,
+        #         'tx_hash': tx_hash,
+        #         'calldata': calldata
+        #     }
+
         params = {
-            "apiKey": ETHPLORER_API_KEY,
-            "limit": n
+            "module": "account",
+            "action": "txlist",
+            "address": self.address,
+            "page": 1,
+            "offset": n,
+            "sort": "desc",
+            "apikey": ETHERSCAN_API_KEY
         }
-        url = f'https://api.ethplorer.io/getTokenHistory/{self.address}'
-        resp = requests.get(url, params=params).json()
-        txn_details = dict()
-        for idx, txn in enumerate(resp["operations"]):
-            eth_tx = w3.eth.getTransaction(txn["transactionHash"])
-            sender = eth_tx['from']
-            tx_hash = eth_tx['hash'].hex()
+        resp = requests.get(ETHERSCAN_URL, params=params)
+        txn_details = []
+        for txn in resp.json()['result']:
+            tx_hash = txn["hash"]
+            sender = txn["from"]
             try:
-                calldata = self.contract.decode_function_input(eth_tx.input)
+                calldata = self.contract.decode_function_input(txn["input"])
             except:
                 calldata = f"Could not decode calldata. For more detail please check at https://etherscan.io/tx/{tx_hash}"
-            txn_details[idx] = {
-                'sender': sender,
-                'tx_hash': tx_hash,
-                'calldata': calldata
-            }
+            txn_details.append({
+                "tx_hash": tx_hash,
+                "sender": sender,
+                "calldata": calldata
+            })
         return txn_details
 
     def get_top_holders(self, n):

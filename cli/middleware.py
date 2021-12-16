@@ -37,11 +37,10 @@ def get_latest_tx(n, contract_addr):
     txn_details = contract.get_latest_tx(n)
     filename = f'Latest {n} {contract.name} Txn {datetime.now().strftime("%d-%m-%Y %H-%M-%S")}.txt'
     with open(filename, 'a') as file:
-        for idx in range(n):
-            if idx not in txn_details: break
-            sender = txn_details[idx]['sender']
-            hash = txn_details[idx]['tx_hash']
-            calldata = txn_details[idx]['calldata']
+        for idx, txn in enumerate(txn_details):
+            sender = txn['sender']
+            hash = txn['tx_hash']
+            calldata = txn['calldata']
             file.write(f'{idx + 1}.\nSender: {sender}\nTxn Hash: {hash}\nCall Data: {calldata}\n\n')
     return
 
