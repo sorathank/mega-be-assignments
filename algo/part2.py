@@ -1,5 +1,5 @@
-wordList = ["abab", "bc", "cd", ""]
-target = "abab"
+wordList = ["abab", "bc", "cd", "", ""]
+target = ""
 
 def solve(wordList, target):
 
@@ -11,6 +11,10 @@ def solve(wordList, target):
             duplicated_set.add(word)
         else:
             word_set.add(word)
+
+    ## EMPTY STRING EDGE CASE HANDLER
+    EMPTY_STRING = ""
+    if target == EMPTY_STRING and EMPTY_STRING in duplicated_set: return f'("{EMPTY_STRING}", "{EMPTY_STRING}")'
 
     for separator_idx in range(0, len(target)):
         first_subword = target[:separator_idx]
