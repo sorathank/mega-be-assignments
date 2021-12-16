@@ -10,7 +10,7 @@ load_dotenv()
 RPC_URL = os.getenv("HTTPS_RPC_URL")
 w3 = Web3(Web3.HTTPProvider(RPC_URL))
 try:
-    POLLING_INTERVAL_SECONDS = int(os.getenv("POLLING_INTERVAL_SECONDS", default=5))
+    POLLING_INTERVAL_SECONDS = int(os.getenv("[ERROR] POLLING_INTERVAL_SECONDS", default=5))
 except:
     sys.stderr.write('Invalid POLLING INTERVAL. Please provide integer between 1 and 1000.\n')
     sys.exit(2)  
