@@ -6,15 +6,23 @@ First, please cd to cli directory and run the command below.
 ```
 pip install -r ./requirements.txt
 ```
+if your laptop is using pip for python2, please use this instead.
+```
+pip3 install -r ./requirements.txt
+```
 Next step, copy ```.env.template.txt``` file and paste it on the same folder. Then rename the new file to ```.env```.
 
 Example:
 
 ![](https://i.ibb.co/KDM0H0T/Screenshot-2021-12-16-215003.png)
 
+Register an account on [Infura](https://infura.io/), Login to your account and create new **Ethereum** project.
+
+Then you can get your ```HTTPS RPC URL``` inside your project in **Endpoint** Section.
+
 Register an account on [Ethplorer](https://ethplorer.io/wallet/#) and create your API Key at [Ethplorer API Panel](https://ethplorer.io/wallet/#screen=api). 
 
-Register an account on [Etherscan APIs](https://etherscan.io/apis) and create your API Key.
+Register an account on [Etherscan APIs](https://etherscan.io/apis), Login and create your API Key at [My API Key](https://etherscan.io/myapikey).
 
 .
 
@@ -22,13 +30,17 @@ Then enter your HTTPS RPC URL, Polling interval for watch_tx command (in seconds
 
 ## How to run
 
-To run the program, cd to cli directory and run the command below.
+To run the program, cd to cli directory and run the command below with the following argument.
 
-```python ./Erc20Helper.py``` 
+```
+python ./Erc20Helper.py
+``` 
 
-if your python command is using python2 with the following argument, use the command below. 
+if your ```python``` command is using python2, use the command below. 
 
-```python3 ./Erc20Helper.py``` 
+```
+python3 ./Erc20Helper.py
+``` 
 
 Optional Arguments:
 ```
