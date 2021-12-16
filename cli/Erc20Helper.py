@@ -21,7 +21,7 @@ def main():
         nargs = 2,
         metavar = ("<CONTRACT_ADDRESS>", "<TARGET_ADDRESS>"),
         default = None,
-        help = "Get Amount of ERC20 Token <CONTRACT_ADDRESS> belong to <target_address>"
+        help = "Get Amount of ERC20 Token <CONTRACT_ADDRESS> belong to <TARGET_ADDRESS>"
         )
     arg_parser.add_argument(
         "-w",

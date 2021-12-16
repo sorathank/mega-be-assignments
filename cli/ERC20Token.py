@@ -12,6 +12,7 @@ POLLING_INTERVAL_SECONDS = int(os.getenv("POLLING_INTERVAL_SECONDS", default=5))
 ETHPLORER_API_KEY = os.getenv("ETHPLORER_API_KEY", default="freekey")
 ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY")
 ETHERSCAN_URL = "https://api.etherscan.io/api"
+ETHPLORER_URL = "https://api.ethplorer.io"
 
 w3 = Web3(Web3.HTTPProvider(os.getenv("HTTPS_RPC_URL")))
 
@@ -107,6 +108,7 @@ class ERC20Contract:
             })
         return txn_details
     
+    # DEPRECATED
     def fetch_transfer_event(self, startblock=0):
         params = {
             "module": "account",
@@ -127,7 +129,7 @@ class ERC20Contract:
             "apiKey": ETHPLORER_API_KEY,
             "limit": n
         }
-        url = f'https://api.ethplorer.io/getTopTokenHolders/{self.address}'
+        url = f'{ETHPLORER_URL}/getTopTokenHolders/{self.address}'
         resp = requests.get(url, params=params).json()
         return resp
         
