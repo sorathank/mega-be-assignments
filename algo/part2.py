@@ -1,4 +1,4 @@
-wordList = ["ab", "bc", "cd"]
+wordList = ["abab", "bc", "cd", ""]
 target = "abab"
 
 def solve(wordList, target):
@@ -12,7 +12,7 @@ def solve(wordList, target):
         else:
             word_set.add(word)
 
-    for separator_idx in range(1, len(target)):
+    for separator_idx in range(0, len(target)):
         first_subword = target[:separator_idx]
         second_subword = target[separator_idx:]
 
