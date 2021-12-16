@@ -103,14 +103,31 @@ class ERC20Contract:
                 "calldata": calldata
             })
         return txn_details
+    
+    def fetch_transfer_event(self, page=1, startblock=0):
+        params = {
+            "module": "account",
+            "action": "tokentx",
+            "contractaddress": self.address,
+            "page": 1,
+            "offset": 10000,
+            "startblock": startblock,
+            "sort": "asc",
+            "apikey": ETHERSCAN_API_KEY
+        }
+        resp = requests.get(ETHERSCAN_URL, params=params)
+        return resp.json()['result']
 
     def get_top_holders(self, n):
-        params = {
-            "apiKey": ETHPLORER_API_KEY,
-            "limit": n
-        }
-        url = f'https://api.ethplorer.io/getTopTokenHolders/{self.address}'
-        resp = requests.get(url, params=params).json()
-        return resp
+        # params = {
+        #     "apiKey": ETHPLORER_API_KEY,
+        #     "limit": n
+        # }
+        # url = f'https://api.ethplorer.io/getTopTokenHolders/{self.address}'
+        # resp = requests.get(url, params=params).json()
+        # return resp
+
+        print(self.fetch_transfer_event())
+        pass
         
 
