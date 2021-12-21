@@ -40,6 +40,8 @@ Example (from problem document)
 
 **Summary**
 
-Time Cost: O(m log(n))
+Time Cost: ~~O(m log(n))~~ O(m)
 
 Space: O(n)
+
+Disclaimer: Edit Time Cost to O(m) on Tuesday 21th December 2021
